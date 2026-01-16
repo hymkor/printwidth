@@ -1,10 +1,14 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
 
 	"github.com/mattn/go-runewidth"
+)
+
+var (
+	flagCode = flag.Int("n", -1, "code point")
 )
 
 func report(s string) {
@@ -18,7 +22,12 @@ func report(s string) {
 }
 
 func main() {
-	for _, s := range os.Args[1:] {
+	flag.Parse()
+
+	if *flagCode >= 0 {
+		report(fmt.Sprintf("%c", *flagCode))
+	}
+	for _, s := range flag.Args() {
 		report(s)
 	}
 }
